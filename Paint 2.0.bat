@@ -1,5 +1,8 @@
 @echo off
-setlocal enabledelayedexpansion & Mode 80,38 &color 00 &cls
+setlocal enabledelayedexpansion
+Mode 80,38
+color 00
+cls
 
 
 set "Mb=Core\MakeBox.bat"
@@ -9,7 +12,7 @@ set "Sd=Core\savefiledialog.exe"
 set "Bb=Core\batbox.exe"
 set "Gt=Core\gotoxy.exe"
 set "Fn=Core\Fn.dll"
-set "test_var=1"
+set "Current_Tool=1"
 set "MenuBG=0"
 set "MenuFG=a"
 set "ColorFG=a"
@@ -953,35 +956,19 @@ Rem On Click
 						exit /b
 					)
 					if "!test_var!"=="2" (
-						set /a temp_var1=!X!-1
-						set /a temp_var2=!Y!-1
-						
-						set /a temp_var3=!X!
-						set /a temp_var4=!Y!-1
-						
-						set /a temp_var5=!X!+1
-						set /a temp_var6=!Y!-1
-						
-						set /a temp_var7=!X!-1
-						set /a temp_var8=!Y!
-						
-						
-						set /a temp_var9=!X!+1
-						set /a temp_var10=!Y!
-
-						set /a temp_var11=!X!-1
-						set /a temp_var12=!Y!+1
-
-						set /a temp_var13=!X!
-						set /a temp_var14=!Y!+1
-
-						set /a temp_var15=!X!+1
-						set /a temp_var16=!Y!+1
-						
-						
-						
-
-						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !temp_var1! !temp_var2! /a !MainChar! /g !temp_var3! !temp_var4! /a !MainChar! /g !temp_var5! !temp_var6! /a !MainChar! /g !X! !Y! /a !MainChar! /g !temp_var7! !temp_var8! /a !MainChar! /g !temp_var9! !temp_var10! /a !MainChar! /g !temp_var11! !temp_var12! /a !MainChar! /g !temp_var13! !temp_var14! /a !MainChar! /g !temp_var15! !temp_var16! /a !MainChar! 
+						set /a top_left_x=!X!-1
+						set /a top_left_y=!Y!-1
+						set /a top_middle_y=!Y!-1
+						set /a top_right_x=!X!+1
+						set /a top_right_y=!Y!-1
+						set /a middle_left_x=!X!-1
+						set /a middle_right_x=!X!+1
+						set /a bottom_left_x=!X!-1
+						set /a bottom_left_y=!Y!+1
+						set /a bottom_middle_y=!Y!+1
+						set /a bottom_right_x=!X!+1
+						set /a bottom_right_y=!Y!+1
+						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !top_left_x! !top_left_y! /a !MainChar! /g !X! !top_middle_y! /a !MainChar! /g !top_right_x! !top_right_y! /a !MainChar! /g !middle_left_x! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !middle_right_x! !Y! /a !MainChar! /g !bottom_left_x! !bottom_left_y! /a !MainChar! /g !X! !bottom_middle_y! /a !MainChar! /g !bottom_right_x! !bottom_right_y! /a !MainChar!
 					)
 				)
 			)
