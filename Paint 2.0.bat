@@ -968,6 +968,7 @@ Rem On Click
 						set /a bottom_middle_y=!Y!+1
 						set /a bottom_right_x=!X!+1
 						set /a bottom_right_y=!Y!+1
+						
 						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !top_left_x! !top_left_y! /a !MainChar! /g !X! !top_middle_y! /a !MainChar! /g !top_right_x! !top_right_y! /a !MainChar! /g !middle_left_x! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !middle_right_x! !Y! /a !MainChar! /g !bottom_left_x! !bottom_left_y! /a !MainChar! /g !X! !bottom_middle_y! /a !MainChar! /g !bottom_right_x! !bottom_right_y! /a !MainChar!
 					)
 				)
