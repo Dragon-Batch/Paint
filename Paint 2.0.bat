@@ -236,20 +236,20 @@ Rem Drop Down Functions
 										if not !X! gtr 7 (
 											if not !Y! gtr 5 (
 												:DropDownRenameLoop1
-												call BlankMenu1
+												call :BlankMenu1
 												!Bb! /g 16 12 /c 0x1f /d "Rename"
 												!Bb! /g 16 14 /c 0x8f /d "Want To Rename a Save?"
 												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
 												set /p "TempInput1= "
 												if "!TempInput1!"=="y" (
 													:DropDownRenameLoop2
-													call BlankMenu1
+													call :BlankMenu1
 													!Bb! /g 16 12 /c 0x1f /d "Rename"
 													!Bb! /g 16 14 /c 0x8f /d "Save You Want To Rename"
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
 													set /p "TempInput2= "
 													if exist "Saves\!TempInput2!.gxy" (
-														call BlankMenu1
+														call :BlankMenu1
 														!Bb! /g 16 12 /c 0x1f /d "Rename"
 														!Bb! /g 16 14 /c 0x8f /d "New Name For Save"
 														!Bb! /g 16 16 /c 0x8f /d "Name:"
@@ -320,10 +320,106 @@ Rem Drop Down Functions
 								Rem Import Option 
 								if not !X! lss 2 (
 									if not !Y! lss 6 (
-										if not !X! gtr 8 (
-											if not !Y! gtr 2 (
-												!Bb! /g 0 0
-												exit /b
+										if not !X! gtr 7 (
+											if not !Y! gtr 6 (
+												:DropDownImportLoop1
+												call :BlankMenu1
+												!Bb! /g 16 12 /c 0x1f /d "Import"
+												!Bb! /g 16 14 /c 0x8f /d "Want To Import a Sprite?"
+												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+												
+												set /p "TempInput1= "
+												if "!TempInput1!"=="y" (
+													call :BlankMenu1
+													!Bb! /g 16 12 /c 0x1f /d "Import"
+													!Bb! /g 16 14 /c 0x8f /d "Name Of Sprite To Import"
+													!Bb! /g 16 16 /c 0x8f /d "Name:"
+
+													set /p "TempInput2= "
+													if exist "Library\Sprites\!TempInput2!.gxy" (
+														:DropDownImportLoop2
+														call :BlankMenu1
+														!Bb! /g 16 12 /c 0x1f /d "Import"
+														!Bb! /g 16 14 /c 0x8f /d "Are You Sure?"
+														!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+
+														set /p "TempInput3= "
+														if "!TempInput3!"=="y" (
+															:DropDownImportLoop3
+															!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+															call :DropDownFunctionlist
+															call :CharactersListBorder
+															call :CharactersList
+															call :DisplayBorder
+															call :ColorMenu
+															call :ColorList
+															for /f "tokens=1-3 delims= " %%a in ('start /b !Fn! mouse') do (
+																set "X=%%b"
+																set "Y=%%a"
+																!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+																!Gt! !X! !Y! "Library\Sprites\!TempInput2!.gxy"
+																call :DropDownFunctionList
+																call :CharactersListBorder
+																call :CharactersList
+																call :DisplayBorder
+																call :ColorMenu
+																call :ColorList
+																call :BlankMenu1
+																!Bb! /g 16 12 /c 0x1f /d "Import"
+																!Bb! /g 16 14 /c 0x8f /d "Place Sprite Here?"
+																!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+
+																set /p "TempInput4="
+																if "!TempInput4!"=="y" (
+																	!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+																	!Gt! !X! !Y! "Library\Sprites\!TempInput2!.gxy"
+																	call :DropDownFunctionList
+																	call :CharactersListBorder
+																	call :CharactersList
+																	call :DisplayBorder
+																	call :ColorMenu
+																	call :ColorList
+																	exit /b
+																) else (
+																	if "!TempInput4!"=="n" (
+																		call :DropDownImportLoop3
+																		exit /b
+																	)
+																	call :DropDownImportLoop3
+																	exit /b
+																)
+															)
+														) else (
+															if "!TempInput3!"=="n" (
+															call :DropDownFunctionlist
+															call :DisplayBorder
+															!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+															exit /b
+															)
+															call :DropDownImportLoop2
+															exit /b
+														)
+													) else (
+														call :BlankMenu1
+														!Bb! /g 16 12 /c 0x1f /d "Import"
+														!Bb! /g 16 14 /c 0x8f /d "Sprite Does Not Exist"
+														!Cw! delay 800
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														call :DropDownFunctionlist
+														call :DisplayBorder
+														exit /b
+													)
+												) else (
+													if "!TempInput1!"=="n" (
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														call :DropDownFunctionList
+														call :DisplayBorder
+														exit /b
+													)
+													call :DropDownImportLoop1
+													exit /b
+												)
+
 											)
 										)
 									)
