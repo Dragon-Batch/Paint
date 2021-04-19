@@ -332,7 +332,6 @@ Rem Drop Down Functions
 							goto FileDropDownClickLoop
 						)
 					)
-
 					Rem Settings Drop Down Function
 					if not !X! lss 15 (
 						if not !Y! lss 0 (
