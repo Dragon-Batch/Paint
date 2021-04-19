@@ -8,7 +8,6 @@ If not exist "Saves\" (
 	md "Saves\"
 )
 
-
 set "Mb=Core\MakeBox.bat"
 set "Cw=Core\CmdWiz.exe"
 !Cw! showcursor 0
