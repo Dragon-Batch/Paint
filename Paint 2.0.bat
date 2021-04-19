@@ -44,104 +44,95 @@ goto MainPaintLoop
 
 Rem Functions Below
 Rem Drop Down Functions
-:DropDownFunctions
-if not !X! lss 0 (
-	if not !Y! lss 0 (
-		if not !X! gtr 53 (
-			if not !Y! gtr 0 (
-				Rem File Drop Down Function
-				if not !X! lss 4 (
-					if not !X! gtr 7 (
-						!Cw! saveblock Data\File\Use-If-Save 1 2 52 27 forcecode
-						!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "File Drop Down"
-						!Bb! /g 0 0 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /d "File" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 1 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8c /d "X" /c 0x8f /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 2 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "New" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 3 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186 /a 32
-						!Bb! /g 0 4 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 5 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Rename" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 6 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Import" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
-						!Bb! /g 0 7 /c 0x!MenuBG!!MenuFG! /a 204 /c 0x!MenuBG!!MenuFG! /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188
-						:FileDropDownClickLoop
-						for /f "tokens=1-3 delims= " %%a in ('start /b !Fn! mouse') do (
-							set "X=%%b"
-							set "Y=%%a"
+	:DropDownFunctions
+	if not !X! lss 0 (
+		if not !Y! lss 0 (
+			if not !X! gtr 53 (
+				if not !Y! gtr 0 (
+					Rem File Drop Down Function
+					if not !X! lss 4 (
+						if not !X! gtr 7 (
+							!Cw! saveblock Data\File\Use-If-Save 1 2 52 27 forcecode
+							!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "File Drop Down"
+							!Bb! /g 0 0 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /d "File" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 1 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8c /d "X" /c 0x8f /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 2 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "New" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 3 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 4 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 5 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Rename" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 6 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "Import" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
+							!Bb! /g 0 7 /c 0x!MenuBG!!MenuFG! /a 204 /c 0x!MenuBG!!MenuFG! /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188
+							:FileDropDownClickLoop
+							for /f "tokens=1-3 delims= " %%a in ('start /b !Fn! mouse') do (
+								set "X=%%b"
+								set "Y=%%a"
 
-							title X:!X! Y:!Y!
+								title X:!X! Y:!Y!
 
-							Rem Exit Option
-							if not !X! lss 9 (
-								if not !Y! lss 1 (
-									if not !X! gtr 9 (
-										if not !Y! gtr 1 (
-											call :DropDownFunctionList
-											call :CharactersListBorder
-											call :DisplayBorder
-											!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-											exit /b
+								Rem Exit Option
+								if not !X! lss 9 (
+									if not !Y! lss 1 (
+										if not !X! gtr 9 (
+											if not !Y! gtr 1 (
+												call :DropDownFunctionList
+												call :CharactersListBorder
+												call :DisplayBorder
+												!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+												exit /b
+											)
 										)
 									)
 								)
-							)
-							Rem New Option
-							if not !X! lss 2 (
-								if not !Y! lss 2 (
-									if not !X! gtr 4 (
-										if not !Y! gtr 2 (		
-											call :DisplayBorder
-											call :DropDownFunctionlist
-											!Gt! 1 2 "Data\File\Use-If-New.gxy"
-											exit /b
+								Rem New Option
+								if not !X! lss 2 (
+									if not !Y! lss 2 (
+										if not !X! gtr 4 (
+											if not !Y! gtr 2 (		
+												call :DisplayBorder
+												call :DropDownFunctionlist
+												!Gt! 1 2 "Data\File\Use-If-New.gxy"
+												exit /b
+											)
 										)
 									)
 								)
-							)
-							Rem Save Option
-							if not !X! lss 2 (
-								if not !Y! lss 3 (
-									if not !X! gtr 5 (
-										if not !Y! gtr 3 (
-											:DropDownSaveLoop
-											!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-											!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 14 /c 0x8f /a 32 /d "Would You Like To Save?" /a 32 /a 32 /a 32
-											!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
-											set /p "TempInput1= "
-
-											if "!TempInput1!"=="y" (
+								Rem Save Option
+								if not !X! lss 2 (
+									if not !Y! lss 3 (
+										if not !X! gtr 5 (
+											if not !Y! gtr 3 (
+												:DropDownSaveLoop
 												!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
 												!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 15 14 /c 0x8f /a 32 /d "Please Enter a Name" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+												!Bb! /g 15 14 /c 0x8f /a 32 /d "Would You Like To Save?" /a 32 /a 32 /a 32
 												!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 												!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 												!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 16 16 /c 0x8f /d "Name:"
-												set /p "TempInput2= "
+												!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
+												set /p "TempInput1= "
 
-												if exist "Saves\!TempInput2!.gxy" (
-													:DropDownSaveOverrideLoop
+												if "!TempInput1!"=="y" (
 													!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
 													!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 14 /c 0x8f /a 32 /d "Override Existing Save?" /a 32 /a 32 /a 32 
+													!Bb! /g 15 14 /c 0x8f /a 32 /d "Please Enter a Name" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
-													set /p "TempInput3= "
+													!Bb! /g 16 16 /c 0x8f /d "Name:"
+													set /p "TempInput2= "
 
-													if "!TempInput3!"=="y" (
-														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-														call :DropDownFunctionList
-														call :DisplayBorder
-														set "TempInput1="
-														set "TempInput2="
-														set "TempInput3="
-														exit /b
-													) else (
-														if "!TempInput3!"=="n" (
+													if exist "Saves\!TempInput2!.gxy" (
+														:DropDownSaveOverrideLoop
+														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Save" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+														!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 14 /c 0x8f /a 32 /d "Override Existing Save?" /a 32 /a 32 /a 32 
+														!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
+														set /p "TempInput3= "
+
+														if "!TempInput3!"=="y" (
 															!Gt! 1 2 "Data\File\Use-If-Save.gxy"
 															call :DropDownFunctionList
 															call :DisplayBorder
@@ -149,245 +140,254 @@ if not !X! lss 0 (
 															set "TempInput2="
 															set "TempInput3="
 															exit /b
+														) else (
+															if "!TempInput3!"=="n" (
+																!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+																call :DropDownFunctionList
+																call :DisplayBorder
+																set "TempInput1="
+																set "TempInput2="
+																set "TempInput3="
+																exit /b
+															)
+															call :DropDownSaveOverrideLoop
+															exit /b
 														)
-														call :DropDownSaveOverrideLoop
+													) else (
+														type "Data\File\Use-If-Save.gxy">"Saves\!TempInput2!.gxy"
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														call :DropDownFunctionList
+														call :DisplayBorder
+														set "TempInput1="
+														set "TempInput2="
+														set "TempInput3="
 														exit /b
 													)
 												) else (
-													type "Data\File\Use-If-Save.gxy">"Saves\!TempInput2!.gxy"
-													!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-													call :DropDownFunctionList
-													call :DisplayBorder
-													set "TempInput1="
-													set "TempInput2="
-													set "TempInput3="
+													if "!TempInput1!"=="n" (
+														call :DropDownFunctionList
+														call :DisplayBorder
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														exit /b
+													)
+													call :DropDownSaveLoop
 													exit /b
 												)
-											) else (
-												if "!TempInput1!"=="n" (
-													call :DropDownFunctionList
-													call :DisplayBorder
-													!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-													exit /b
-												)
-												call :DropDownSaveLoop
-												exit /b
 											)
 										)
 									)
 								)
-							)
-							Rem Open Option
-							if not !X! lss 2 (
-								if not !Y! lss 4 (
-									if not !X! gtr 5 (
-										if not !Y! gtr 4 (
-											:DropDownOpenLoop
-											!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-											!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 14 /c 0x8f /a 32 /d "Want To Load a Save?" /a 32 /a 32 /a 32
-											!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
-											set /p "TempInput1= "
-											if "!TempInput1!"=="y" (
+								Rem Open Option
+								if not !X! lss 2 (
+									if not !Y! lss 4 (
+										if not !X! gtr 5 (
+											if not !Y! gtr 4 (
+												:DropDownOpenLoop
 												!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
 												!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 15 14 /c 0x8f /a 32 /d "Save Name?" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+												!Bb! /g 15 14 /c 0x8f /a 32 /d "Want To Load a Save?" /a 32 /a 32 /a 32
 												!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 												!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 												!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 16 16 /c 0x8f /d "Name:"
-												set /p "TempInput2= "
-
-												if exist "Saves\!TempInput2!.gxy" (
-													call :DisplayBorder
-													call :DropDownFunctionList
-
-													!Gt! 1 2 "Saves\!TempInput2!.gxy"
-													exit /b
-												) else (
+												!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
+												set /p "TempInput1= "
+												if "!TempInput1!"=="y" (
 													!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
 													!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 14 /c 0x8f /a 32 /d "Save Does Not Exist" /a 32 /a 32 /a 32
-													!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Cw! delay 800
-													call :DisplayBorder
-													call :DropDownFunctionList
-													!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-													exit /b
-												)
-											) else (
-												if "!TempInput1!"=="n" (
-													!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-													call :DisplayBorder
-													call :DropDownFunctionList
-													exit /b
-												)
-												call :DropDownOpenLoop
-												exit /b
-											)
-										)
-									)
-								)
-							)
-							Rem Rename Option
-							if not !X! lss 2 (
-								if not !Y! lss 5 (
-									if not !X! gtr 7 (
-										if not !Y! gtr 5 (
-											:DropDownRenameLoop1
-											!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-											!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 14 /c 0x8f /a 32 /d "Want To Rename a Save?" /a 32 /a 32
-											!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
-											!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-											!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
-											set /p "TempInput1= "
-											if "!TempInput1!"=="y" (
-												:DropDownRenameLoop2
-												!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-												!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 15 14 /c 0x8f /a 32 /d "Save You Want To Rename" /a 32 /a 32 /a 32
-												!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-												!Bb! /g 16 16 /c 0x8f /d "Name:"
-												set /p "TempInput2= "
-												if exist "Saves\!TempInput2!.gxy" (
-													:DropDownRenameLoop3
-													!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-													!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 14 /c 0x8f /a 32 /d "New Save Name     " /a 32 /a 32 /a 32
+													!Bb! /g 15 14 /c 0x8f /a 32 /d "Save Name?" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
-													set /p "TempInput3= "
-													if not exist "Saves\!TempInput3!.gxy" (
-														:DropDownRenameLoop4
-														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-														!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-														!Bb! /g 15 14 /c 0x8f /a 32 /d "Are You Sure?" /a 32 /a 32 /a 32
-														!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-														!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-														!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-														!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
-														set /p "TempInput4= "
-														if "!TempInput4!"=="y" (
-															cd Saves
-															Rename "!TempInput2!.gxy" "!TempInput3!.gxy"
-															cd..
-															call :DisplayBorder
-															call :DropDownFunctionList
-															!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-															exit /b
-														) else (
-															if "!TempInput4!"=="n" (
-																call :DisplayBorder
-																call :DropDownFunctionList
-																!Gt! 1 2 "Data\File\Use-If-Save.gxy"
-																exit /b
-															)
-															call :DropDownRenameLoop4
-															exit /b
-														)
+													set /p "TempInput2= "
+
+													if exist "Saves\!TempInput2!.gxy" (
+														call :DisplayBorder
+														call :DropDownFunctionList
+
+														!Gt! 1 2 "Saves\!TempInput2!.gxy"
+														exit /b
 													) else (
-														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Open" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
 														!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-														!Bb! /g 15 14 /c 0x8f /a 32 /d "Name Allready Exists" /a 32 /a 32 /a 32
+														!Bb! /g 15 14 /c 0x8f /a 32 /d "Save Does Not Exist" /a 32 /a 32 /a 32
 														!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 														!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 														!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 														!Cw! delay 800
-														call :DropDownRenameLoop3
+														call :DisplayBorder
+														call :DropDownFunctionList
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
 														exit /b
 													)
-														
 												) else (
-													!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
-													!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Bb! /g 15 14 /c 0x8f /a 32 /d "Name Allready Exists" /a 32 /a 32 
-													!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+													if "!TempInput1!"=="n" (
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														call :DisplayBorder
+														call :DropDownFunctionList
+														exit /b
+													)
+													call :DropDownOpenLoop
+													exit /b
+												)
+											)
+										)
+									)
+								)
+								Rem Rename Option
+								if not !X! lss 2 (
+									if not !Y! lss 5 (
+										if not !X! gtr 7 (
+											if not !Y! gtr 5 (
+												:DropDownRenameLoop1
+												!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+												!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+												!Bb! /g 15 14 /c 0x8f /a 32 /d "Want To Rename a Save?" /a 32 /a 32
+												!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+												!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
+												!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+												!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
+												set /p "TempInput1= "
+												if "!TempInput1!"=="y" (
+													:DropDownRenameLoop2
+													!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+													!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+													!Bb! /g 15 14 /c 0x8f /a 32 /d "Save You Want To Rename" /a 32 /a 32 /a 32
+													!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 													!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
-													!Cw! delay 800
-													call ::DropDownRenameLoop2
-													exit /b
-												)
+													!Bb! /g 16 16 /c 0x8f /d "Name:"
+													set /p "TempInput2= "
+													if exist "Saves\!TempInput2!.gxy" (
+														:DropDownRenameLoop3
+														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+														!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 14 /c 0x8f /a 32 /d "New Save Name     " /a 32 /a 32 /a 32
+														!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 16 16 /c 0x8f /d "Name:"
+														set /p "TempInput3= "
+														if not exist "Saves\!TempInput3!.gxy" (
+															:DropDownRenameLoop4
+															!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+															!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 14 /c 0x8f /a 32 /d "Are You Sure?" /a 32 /a 32 /a 32
+															!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 16 16 /c 0x8f /a 40 /d "Y,N" /a 41 /d ":"
+															set /p "TempInput4= "
+															if "!TempInput4!"=="y" (
+																cd Saves
+																Rename "!TempInput2!.gxy" "!TempInput3!.gxy"
+																cd..
+																call :DisplayBorder
+																call :DropDownFunctionList
+																!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+																exit /b
+															) else (
+																if "!TempInput4!"=="n" (
+																	call :DisplayBorder
+																	call :DropDownFunctionList
+																	!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+																	exit /b
+																)
+																call :DropDownRenameLoop4
+																exit /b
+															)
+														) else (
+															!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+															!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 14 /c 0x8f /a 32 /d "Name Allready Exists" /a 32 /a 32 /a 32
+															!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+															!Cw! delay 800
+															call :DropDownRenameLoop3
+															exit /b
+														)
+															
+													) else (
+														!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /d "Rename" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32 
+														!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 14 /c 0x8f /a 32 /d "Name Allready Exists" /a 32 /a 32 
+														!Bb! /g 15 15 /c 0x8f /a 32 /a 32 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+														!Cw! delay 800
+														call ::DropDownRenameLoop2
+														exit /b
+													)
 
-											) else (
-												if "!TempInput1!"=="n" (
-													call :DisplayBorder
-													call :DropDownFunctionList
-													!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+												) else (
+													if "!TempInput1!"=="n" (
+														call :DisplayBorder
+														call :DropDownFunctionList
+														!Gt! 1 2 "Data\File\Use-If-Save.gxy"
+														exit /b
+													)
+													call :DropDownRenameLoop1
 													exit /b
 												)
-												call :DropDownRenameLoop1
+											)
+										)
+									)
+								)
+								Rem Import Option 
+								if not !X! lss 2 (
+									if not !Y! lss 6 (
+										if not !X! gtr 8 (
+											if not !Y! gtr 2 (
+												!Bb! /g 0 0
 												exit /b
 											)
 										)
 									)
 								)
 							)
-							Rem Import Option 
-							if not !X! lss 2 (
-								if not !Y! lss 6 (
-									if not !X! gtr 8 (
-										if not !Y! gtr 2 (
-											!Bb! /g 0 0
-											exit /b
-										)
-									)
+							goto FileDropDownClickLoop
+						)
+					)
+
+					Rem Settings Drop Down Function
+					if not !X! lss 15 (
+						if not !Y! lss 0 (
+							if not !X! gtr 22 (
+								if not !Y! gtr 0 (
+									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Settings Drop Down"
+									exit /b
 								)
 							)
 						)
-						goto FileDropDownClickLoop
 					)
-				)
-
-				Rem Settings Drop Down Function
-				if not !X! lss 15 (
-					if not !Y! lss 0 (
-						if not !X! gtr 22 (
-							if not !Y! gtr 0 (
-								!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Settings Drop Down"
-								exit /b
+					Rem Library Drop Down Function
+					if not !X! lss 30 (
+						if not !Y! lss 0 (
+							if not !X! gtr 36 (
+								if not !Y! gtr 0 (
+									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Library Drop Down"
+									exit /b
+								)
 							)
 						)
 					)
-				)
-				Rem Library Drop Down Function
-				if not !X! lss 30 (
-					if not !Y! lss 0 (
-						if not !X! gtr 36 (
-							if not !Y! gtr 0 (
-								!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Library Drop Down"
-								exit /b
+					Rem Export Drop Down Function
+					if not !X! lss 44 (
+						if not !Y! lss 0 (
+							if not !X! gtr 36 (
+								if not !Y! gtr 49 (
+									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Export Drop Down"
+									exit /b
+								)
 							)
 						)
 					)
-				)
-				Rem Export Drop Down Function
-				if not !X! lss 44 (
-					if not !Y! lss 0 (
-						if not !X! gtr 36 (
-							if not !Y! gtr 49 (
-								!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Export Drop Down"
-								exit /b
-							)
-						)
-					)
-				)
-			
-			)
-		)
-	)
-) else (exit /b)
+				
+				) else (exit /b)
+			) else (exit /b)
+		) else (exit /b)
+	) else (exit /b)
 
 Rem Drop Down Function List
 	:DropDownFunctionList
@@ -838,9 +838,7 @@ Rem Give Color
 		if not !Y! lss 30 (
 			if not !X! gtr 69 (
 				if not !Y! gtr 34 (
-
 					Rem Color Background
-
 					If "!X!,!Y!"=="55,30" ( 
 						set "ColorBG=0"
 					)
@@ -940,9 +938,9 @@ Rem Give Color
 					If "!X!,!Y!"=="69,34" ( 
 						set "ColorFG=f"
 					)
-				)
-			)
-		)
+				) else (exit /b)
+			) else (exit /b)
+		) else (exit /b)
 	) else (exit /b)
 
 Rem On Click
@@ -951,11 +949,20 @@ Rem On Click
 		if not !X! lss 1 (
 			if not !Y! gtr 27 (
 				if not !X! gtr 52 (
-					if "!test_var!"=="1" (
+					if "!Current_Tool!"=="2" (
 						start /b !Bb! /g !X! !Y! /c 0x!ColorBG!!ColorFG! /a !MainChar!
 						exit /b
 					)
-					if "!test_var!"=="2" (
+				)
+			)
+		)
+	)
+	
+	if not !Y! lss 3 (
+		if not !X! lss 2 (
+			if not !Y! gtr 26 (
+				if not !X! gtr 51 (
+					if "!Current_Tool!"=="1" (
 						set /a top_left_x=!X!-1
 						set /a top_left_y=!Y!-1
 						set /a top_middle_y=!Y!-1
@@ -968,11 +975,13 @@ Rem On Click
 						set /a bottom_middle_y=!Y!+1
 						set /a bottom_right_x=!X!+1
 						set /a bottom_right_y=!Y!+1
-						
 						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !top_left_x! !top_left_y! /a !MainChar! /g !X! !top_middle_y! /a !MainChar! /g !top_right_x! !top_right_y! /a !MainChar! /g !middle_left_x! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !middle_right_x! !Y! /a !MainChar! /g !bottom_left_x! !bottom_left_y! /a !MainChar! /g !X! !bottom_middle_y! /a !MainChar! /g !bottom_right_x! !bottom_right_y! /a !MainChar!
-					)
-				)
-			)
-		)
+						exit /b
+					) else (exit /b)
+				) else (exit /b)
+			) else (exit /b)
+		) else (exit /b)
 	) else (exit /b)
 
+
+	exit /b
