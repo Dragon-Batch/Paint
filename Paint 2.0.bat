@@ -4,6 +4,9 @@ Mode 80,38
 color 00
 cls
 
+If not exist "Saves\" (
+	md "Saves\"
+)
 
 set "Mb=Core\MakeBox.bat"
 set "Cw=Core\CmdWiz.exe"
