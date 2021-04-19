@@ -1,1 +1,0 @@
-!Bb! /g 0 0 /c 0x!MenuBG!!MenuFG! /a 186 /d " New " /a 186 /d " Open " /a 186 /d " Save " /a 186 /d " Edit " /a 186 /d " Save As " /a 186 /d " Open File " /a 186 /d " Import " /a 186 /d " Options " /a 186 /d ""

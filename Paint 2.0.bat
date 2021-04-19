@@ -4,6 +4,10 @@ Mode 80,38
 color 00
 cls
 
+If not exist "Saves\" (
+	md "Saves\"
+)
+
 
 set "Mb=Core\MakeBox.bat"
 set "Cw=Core\CmdWiz.exe"
@@ -329,7 +333,6 @@ Rem Drop Down Functions
 							goto FileDropDownClickLoop
 						)
 					)
-
 					Rem Settings Drop Down Function
 					if not !X! lss 15 (
 						if not !Y! lss 0 (
