@@ -1,6 +1,6 @@
-echo off
+@echo off
 setlocal enabledelayedexpansion
-Mode 80,38
+Mode 72,36
 color 00
 cls
 
@@ -16,11 +16,11 @@ set "Fn=Core\Fn.dll"
 set "Chars.if=Core\Chars.if"
 set "ColorsFG.if=Core\ColorsFG.if"
 set "ColorsBG.if=Core\ColorsBG.if"
-set "Current_Tool=1"
+set "Current_Brush=1"
 set "MenuBG=0"
 set "MenuFG=a"
-set "ColorFG=a"
-set "ColorBG=c"
+set "ColorFG=8"
+set "ColorBG=0"
 set "MainChar=88"
 
 Rem i will be back gotta take a leak
@@ -31,18 +31,23 @@ call :CharactersList
 call :DisplayBorder
 call :ColorMenu
 call :ColorList
-
+call :ToolMenu
 
 :MainPaintLoop
 	for /f "tokens=1-3 delims= " %%a in ('start /b !Fn! mouse') do (
 		set "X=%%b"
 		set "Y=%%a"
 
-		call :OnClick
-		call :DropDownFunctions
-		call :GiveChar
-		call :GiveColor
-
+		call :Paint_Brush_!Current_Brush!
+		set /a "Current_Brush=(%random%%%4)+1"
+		set /a "MainChar=(%random%%%255)+1"
+		set /a "ColorFG=(%random%%%9)+1"
+		set /a "ColorBG=(%random%%%9)+1"
+		if not !errorlevel! equ 1 (
+		call :Drop_Down_Functions
+		call :Give_Character
+		call :Give_Color
+		)
 		title X:!X! Y:!Y!
 	)
 goto MainPaintLoop
@@ -50,17 +55,54 @@ goto MainPaintLoop
 
 Rem Functions Below
 
-Rem BlankMenu1
-	:BlankMenu1
+Rem Tool Menu Functions
+Rem Tool Menu
+	:ToolMenu
+	!Bb! /g 54 15 /c 0x!MenuBG!!MenuFG! /a 201 /a 205 /a 205 /a 205 /a 205 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 205 /a 205 /a 205 /a 205 /a 187
+	!Bb! /g 54 16 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 17 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 18 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 19 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 20 /c 0x!MenuBG!!MenuFG! /a 200 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188
+	
+	!Bb! /g 54 21 /c 0x!MenuBG!!MenuFG! /a 201 /a 205 /a 205 /a 205 /a 205 /a 205 /a 32 /a 32 /a 32 /a 32 /a 32 /a 205 /a 205 /a 205 /a 205 /a 205 /a 187
+	!Bb! /g 54 22 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 23 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 24 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 25 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 26 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 27 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 186
+	!Bb! /g 54 28 /c 0x!MenuBG!!MenuFG! /a 200 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188
+	
+	!Bb! /g 59 15 /c 0x!MenuBG!!MenuFG! /d "Brushes"
+	!Bb! /g 55 16 /c 0x!MenuBG!!MenuFG! /d "Tall Brush----X"
+	!Bb! /g 55 17 /c 0x!MenuBG!!MenuFG! /d "Wide Brush----X"
+	!Bb! /g 55 18 /c 0x!MenuBG!!MenuFG! /d "3x3 Brush-- --X"
+	!Bb! /g 55 19 /c 0x!MenuBG!!MenuFG! /d "1x1 Brush- ---X"
+	
+	
+	
+	exit /b
+
+Rem Blank Menu 1
+	:Blank_Menu_1
 	!Bb! /g 15 12 /c 0x8f /a 32 /c 0x1f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8f /a 32
 	!Bb! /g 15 13 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 	!Bb! /g 15 14 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 	!Bb! /g 15 15 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 	!Bb! /g 15 16 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
 	!Bb! /g 15 17 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32
+	if not "%~1"=="" !Bb! /g 17 12 /c 0x1f /d "%~1"
+	if not "%~2"=="" !Bb! /g 16 13 /c 0x8f /d "%~2"
+	if not "%~3"=="" !Bb! /g 16 14 /c 0x8f /d "%~3"
+	if not "%~4"=="" !Bb! /g 16 15 /c 0x8f /d "%~4"
+	if not "%~5"=="" !Bb! /g 16 16 /c 0x8f /d "%~5"
+	if not "%~6"=="" !Bb! /g 16 17 /c 0x8f /d "%~6"
+
 	exit /b
+
 Rem Drop Down Functions
-	:DropDownFunctions
+	:Drop_Down_Functions
 	if not !X! lss 0 (
 		if not !Y! lss 0 (
 			if not !X! gtr 53 (
@@ -68,8 +110,9 @@ Rem Drop Down Functions
 					Rem File Drop Down Function
 					if not !X! lss 4 (
 						if not !X! gtr 7 (
+							!Bb! /g 54 10 /c 0x!COlorBG!!ColorFG! /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
+							!Bb! /g 54 10 /c 0x!ColorBG!!ColorFG! /d "File Drop Down"
 							!Cw! saveblock Data\File\Use-If-Save 1 2 52 27 forcecode
-							!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "File Drop Down"
 							!Bb! /g 0 0 /c 0x!MenuBG!!MenuFG! /a 186 /a 32 /a 32 /a 32 /d "File" /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
 							!Bb! /g 0 1 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x8c /d "X" /c 0x8f /a 32 /c 0x!MenuBG!!MenuFG! /a 186
 							!Bb! /g 0 2 /c 0x!MenuBG!!MenuFG! /a 186 /c 0x8f /a 32 /d "New" /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /c 0x!MenuBG!!MenuFG! /a 186
@@ -118,14 +161,14 @@ Rem Drop Down Functions
 										if not !X! gtr 5 (
 											if not !Y! gtr 3 (
 												:DropDownSaveLoop
-												call :BlankMenu1
+												call :Blank_Menu_1
 												!Bb! /g 16 12 /c 0x1f /d "Save"
 												!Bb! /g 16 14 /c 0x8f /d "Would You Like To Save?"
 												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
 												set /p "TempInput1= "
 
 												if "!TempInput1!"=="y" (
-													call :BlankMenu1
+													call :Blank_Menu_1
 													!Bb! /g 16 12 /c 0x1f /d "Save"
 													!Bb! /g 16 14 /c 0x8f /d "Please Enter a Name"
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
@@ -133,7 +176,7 @@ Rem Drop Down Functions
 
 													if exist "Saves\!TempInput2!.gxy" (
 														:DropDownSaveOverrideLoop
-														call :BlankMenu1
+														call :Blank_Menu_1
 														!Bb! /g 16 12 /c 0x1f /d "Save"
 														!Bb! /g 16 14 /c 0x8f /d "Override Existing Save?"
 														!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
@@ -191,13 +234,13 @@ Rem Drop Down Functions
 										if not !X! gtr 5 (
 											if not !Y! gtr 4 (
 												:DropDownOpenLoop
-												call :BlankMenu1
+												call :Blank_Menu_1
 												!Bb! /g 16 12 /c 0x1f /d "Open"
 												!Bb! /g 16 14 /c 0x8f /d "Want To Load a Save?"
 												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
 												set /p "TempInput1= "
 												if "!TempInput1!"=="y" (
-													call :BlankMenu1
+													call :Blank_Menu_1
 													!Bb! /g 16 12 /c 0x1f /d "Open"
 													!Bb! /g 16 14 /c 0x8f /d "Enter Save Name"
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
@@ -210,7 +253,7 @@ Rem Drop Down Functions
 														!Gt! 1 2 "Saves\!TempInput2!.gxy"
 														exit /b
 													) else (
-														call :BlankMenu1
+														call :Blank_Menu_1
 														!Bb! /g 16 12 /c 0x1f /d "Open"
 														!Bb! /g 16 14 /c 0x8f /d "Save Does Not Exist"
 														!Cw! delay 800
@@ -239,27 +282,27 @@ Rem Drop Down Functions
 										if not !X! gtr 7 (
 											if not !Y! gtr 5 (
 												:DropDownRenameLoop1
-												call :BlankMenu1
+												call :Blank_Menu_1
 												!Bb! /g 16 12 /c 0x1f /d "Rename"
 												!Bb! /g 16 14 /c 0x8f /d "Want To Rename a Save?"
 												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
 												set /p "TempInput1= "
 												if "!TempInput1!"=="y" (
 													:DropDownRenameLoop2
-													call :BlankMenu1
+													call :Blank_Menu_1
 													!Bb! /g 16 12 /c 0x1f /d "Rename"
 													!Bb! /g 16 14 /c 0x8f /d "Save You Want To Rename"
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
 													set /p "TempInput2= "
 													if exist "Saves\!TempInput2!.gxy" (
-														call :BlankMenu1
+														call :Blank_Menu_1
 														!Bb! /g 16 12 /c 0x1f /d "Rename"
 														!Bb! /g 16 14 /c 0x8f /d "New Name For Save"
 														!Bb! /g 16 16 /c 0x8f /d "Name:"
 														set /p "TempInput3= "
 														if not exist "Saves\!TempInput3!.gxy" (
 															:DropDownRenameLoop4
-															call :BlankMenu1
+															call :Blank_Menu_1
 															!Bb! /g 16 12 /c 0x1f /d "Rename"
 															!Bb! /g 16 14 /c 0x8f /d "Are You Sure?"
 															!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
@@ -326,14 +369,14 @@ Rem Drop Down Functions
 										if not !X! gtr 7 (
 											if not !Y! gtr 6 (
 												:DropDownImportLoop1
-												call :BlankMenu1
+												call :Blank_Menu_1
 												!Bb! /g 16 12 /c 0x1f /d "Import"
 												!Bb! /g 16 14 /c 0x8f /d "Want To Import a Sprite?"
 												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
 												
 												set /p "TempInput1= "
 												if "!TempInput1!"=="y" (
-													call :BlankMenu1
+													call :Blank_Menu_1
 													!Bb! /g 16 12 /c 0x1f /d "Import"
 													!Bb! /g 16 14 /c 0x8f /d "Name Of Sprite To Import"
 													!Bb! /g 16 16 /c 0x8f /d "Name:"
@@ -341,7 +384,7 @@ Rem Drop Down Functions
 													set /p "TempInput2= "
 													if exist "Library\Sprites\!TempInput2!.gxy" (
 														:DropDownImportLoop2
-														call :BlankMenu1
+														call :Blank_Menu_1
 														!Bb! /g 16 12 /c 0x1f /d "Import"
 														!Bb! /g 16 14 /c 0x8f /d "Are You Sure?"
 														!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
@@ -367,7 +410,7 @@ Rem Drop Down Functions
 																call :DisplayBorder
 																call :ColorMenu
 																call :ColorList
-																call :BlankMenu1
+																call :Blank_Menu_1
 																!Bb! /g 16 12 /c 0x1f /d "Import"
 																!Bb! /g 16 14 /c 0x8f /d "Place Sprite Here?"
 																!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
@@ -403,7 +446,7 @@ Rem Drop Down Functions
 															exit /b
 														)
 													) else (
-														call :BlankMenu1
+														call :Blank_Menu_1
 														!Bb! /g 16 12 /c 0x1f /d "Import"
 														!Bb! /g 16 14 /c 0x8f /d "Sprite Does Not Exist"
 														!Cw! delay 800
@@ -436,7 +479,8 @@ Rem Drop Down Functions
 						if not !Y! lss 0 (
 							if not !X! gtr 22 (
 								if not !Y! gtr 0 (
-									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Settings Drop Down"
+									!Bb! /g 54 10 /c 0x!COlorBG!!ColorFG! /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
+									!Bb! /g 54 10 /c 0x!ColorBG!!ColorFG! /d "Settings Drop Down"
 									exit /b
 								)
 							)
@@ -447,7 +491,8 @@ Rem Drop Down Functions
 						if not !Y! lss 0 (
 							if not !X! gtr 36 (
 								if not !Y! gtr 0 (
-									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Library Drop Down"
+									!Bb! /g 54 10 /c 0x!COlorBG!!ColorFG! /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
+									!Bb! /g 54 10 /c 0x!ColorBG!!ColorFG! /d "Library Drop Down"
 									exit /b
 								)
 							)
@@ -458,21 +503,15 @@ Rem Drop Down Functions
 						if not !Y! lss 0 (
 							if not !X! gtr 49 (
 								if not !Y! gtr 0 (
+									!Bb! /g 54 10 /c 0x!COlorBG!!ColorFG! /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 /a 32 
+									!Bb! /g 54 10 /c 0x!ColorBG!!ColorFG! /d "Export Drop Down"
 									!Cw! saveblock "Data\Export\Use-If-Export" 1 2 52 27 forcecode
-									!Bb! /g 60 10 /c 0x!ColorBG!!ColorFG! /d "Export Drop Down"
 									:DropDownExportLoop1
-									call :BlankMenu1
-									!Bb! /g 16 12 /c 0x1f /d "Export"
-									!Bb! /g 16 14 /c 0x8f /d "Want To Create a Sprite?"
-									!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+									call :Blank_Menu_1 "Export" "" "Want To Create a Sprite?" "" "(Y/N):"
 
 									set /p "TempInput1= "
 									if "!TempInput1!"=="y" (
-										call :BlankMenu1
-										!Bb! /g 16 12 /c 0x1f /d "Export"
-										!Bb! /g 16 14 /c 0x8f /d "Select The Top-Left And"
-										!Bb! /g 16 15 /c 0x8f /d "The Bottom-Right Corner"
-										!Bb! /g 16 16 /c 0x8f /d "Of What To Be a Sprite"
+										call :Blank_Menu_1 "Export" "" "Select The Top-Left And" "The Bottom-Right Corner" "Of What To Be a Sprite"
 										title Select The Top-Left And The Bottom-Right Corner Of What To Be a Sprite
 										!Cw! delay 3700
 										call :DisplayBorder
@@ -487,6 +526,7 @@ Rem Drop Down Functions
 											set "Point_1_Y=%%a"
 										)
 
+										start /b !Bb! /c 0x0f /g !Point_1_X! !Point_1_Y! /a 201 /c 0x00
 										for /f "tokens=1-3 delims= " %%a in ('start /b !Fn! mouse') do (
 											set "Point_2_X=%%b"
 											set "Point_2_Y=%%a"
@@ -502,45 +542,43 @@ Rem Drop Down Functions
 
 										if !Point_2_X! gtr !Point_1_X! (
 											if !Point_2_Y! gtr !Point_1_Y! (
-												set /a "var1=!Point_2_X!-!Point_1_X!"
-												set /a "var2=!Point_2_Y!-!Point_1_Y!"
-												set /a "var1=!var1!+1"
-												set /a "var2=!var2!+1"
-												call !Mb! !Point_1_X! !Point_1_Y! !var2! !var1! - - 0f 3
+												set /a "Num1=!Point_2_X!-!Point_1_X!"
+												set /a "Num2=!Point_2_Y!-!Point_1_Y!"
+												set /a "Num1=!Num1!+1"
+												set /a "Num2=!Num2!+1"
+												
+
+												set /a "Inside_Call_Mb_1=!Point_1_X!+1"
+												set /a "Inside_Call_Mb_2=!Point_1_Y!+1"
+												set /a "Inside_Call_Mb_3=!Num1!-2"
+												set /a "Inside_Call_Mb_4=!Num2!-2"
+												!Cw! saveblock "Data\Export\Use-If-Export_2" !Inside_Call_Mb_1! !Inside_Call_Mb_2! !Inside_Call_Mb_3! !Inside_Call_Mb_4! forcecode
+												call !Mb! !Point_1_X! !Point_1_Y! !Num2! !Num1! - - 0f 2
+												!Gt! !Inside_Call_Mb_1! !Inside_Call_Mb_2! "Data\Export\Use-If-Export_2.gxy"
 												:DropDownExportLoop3
-												call :BlankMenu1
-												!Bb! /g 16 12 /c 0x1f /d "Export"
-												!Bb! /g 16 14 /c 0x8f /d "Create This Sprite?"
-												!Bb! /g 16 15 /c 0x8f /d ""
-												!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+												call :Blank_Menu_1 "Export" "" "Create This Sprite?" "" "(Y/N):"
 
 												set /p "TempInput2= "
 												if "!TempInput2!"=="y" (
 
 													:DropDownExportLoop4
-													call :BlankMenu1
-													!Bb! /g 16 12 /c 0x1f /d "Export"
-													!Bb! /g 16 14 /c 0x8f /d "Name The Sprite"
-													!Bb! /g 16 16 /c 0x8f /d "Name:"
+													call :Blank_Menu_1 "Export" "" "Name The Sprite" "" "Name:"
 													set /p "TempInput3= "
 													if not exist "Library\Sprites\!TempInput3!.gxy" (
 														!Gt! 1 2 "Data\Export\Use-If-Export.gxy"
 														call :DisplayBorder
 														call :DropDownFunctionList
-														!Cw! saveblock "Library\Sprites\!TempInput3!" !Point_1_X! !Point_1_Y! !var1! !var2! forcecode
+														!Cw! saveblock "Library\Sprites\!TempInput3!" !Inside_Call_Mb_1! !Inside_Call_Mb_2! !Inside_Call_Mb_3! !Inside_Call_Mb_4! forcecode
 														exit /b
 													) else (
 														:DropDownExportLoop5
-														call :BlankMenu1
-														!Bb! /g 16 12 /c 0x1f /d "Export"
-														!Bb! /g 16 14 /c 0x8f /d "Override Existing Sprite?"
-														!Bb! /g 16 16 /c 0x8f /d "(Y/N):"
+														call :Blank_Menu_1 "Export" "" "Override Existing Sprite?" "" "(Y/N):"
 														set /p "TempInput4= "
 														if "!TempInput4!"=="y" (
 															call :DisplayBorder
 															call :DropDownFunctionList
 															!Gt! 1 2 Data\File\Use-If-Save.gxy
-															!Cw! saveblock "Library\Sprites\!TempInput3!" !Point_1_X! !Point_1_Y! !var1! !var2! forcecode
+															!Cw! saveblock "Library\Sprites\!TempInput3!" !Inside_Call_Mb_1! !Inside_Call_Mb_2! !Inside_Call_Mb_3! !Inside_Call_Mb_4! forcecode
 															exit /b
 														) else (
 															if "!TempInput4!"=="n" (
@@ -601,26 +639,30 @@ Rem Characters List Border
 	exit /b
 Rem Characters List
 	:CharactersList
-	!Bb! /g 1 30 /c 0x0a /a 65 /g 3 30 /a 66 /g 5 30 /a 67 /g 7 30 /a 68 /g 9 30 /a 69 /g 11 30 /a 70 /g 13 30 /a 71 /g 15 30 /a 72 /g 17 30 /a 73 /g 19 30 /a 74 /g 21 30 /a 75 /g 23 30 /a 76 /g 25 30 /a 77 /g 1 31 /a 78 /g 3 31 /a 79 /g 5 31 /a 80 /g 7 31 /a 81 /g 9 31 /a 82 /g 11 31 /a 83 /g 13 31 /a 84 /g 15 31 /a 85 /g 17 31 /a 86 /g 19 31 /a 87 /g 21 31 /a 88 /g 23 31 /a 89 /g 25 31 /a 90 /g 1 32 /a 97 /g 3 32 /a 98 /g 5 32 /a 99 /g 7 32 /a 100 /g 9 32 /a 101 /g 11 32 /a 102 /g 13 32 /a 103 /g 15 32 /a 104 /g 17 32 /a 105 /g 19 32 /a 106 /g 21 32 /a 107 /g 23 32 /a 108 /g 25 32 /a 109 /g 1 33 /a 110 /g 3 33 /a 111 /g 5 33 /a 112 /g 7 33 /a 113 /g 9 33 /a 114 /g 11 33 /a 115 /g 13 33 /a 116 /g 15 33 /a 117 /g 17 33 /a 118 /g 19 33 /a 119 /g 21 33 /a 120 /g 23 33 /a 121 /g 25 33 /a 122 /g 1 34 /a 48 /g 3 34 /a 49 /g 5 34 /a 50 /g 7 34 /a 51 /g 9 34 /a 52 /g 11 34 /a 53 /g 13 34 /a 54 /g 15 34 /a 55 /g 17 34 /a 56 /g 19 34 /a 57 /g 28 30 /a 32 /g 30 30 /a 33 /g 32 30 /a 34 /g 34 30 /a 35 /g 36 30 /a 36 /g 38 30 /a 37 /g 40 30 /a 38 /g 42 30 /a 39 /g 44 30 /a 40 /g 46 30 /a 41 /g 48 30 /a 42 /g 50 30 /a 43 /g 52 30 /a 44 /g 28 31 /a 45 /g 30 31 /a 46 /g 32 31 /a 47 /g 34 31 /a 58 /g 36 31 /a 59 /g 38 31 /a 60 /g 40 31 /a 61 /g 42 31 /a 62 /g 44 31 /a 63 /g 46 31 /a 64 /g 48 31 /a 91 /g 50 31 /a 92 /g 52 31 /a 93 /g 28 32 /a 94 /g 30 32 /a 96 /g 32 32 /a 95 /g 34 32 /a 123 /g 36 32 /a 124 /g 38 32 /a 125 /g 40 32 /a 126 /g 42 32 /a 176 /g 44 32 /a 177 /g 46 32 /a 178 /g 48 32 /a 185 /g 50 32 /a 186 /g 52 32 /a 187 /g 28 33 /a 188 /g 30 33 /a 200 /g 32 33 /a 201 /g 34 33 /a 202 /g 36 33 /a 203 /g 38 33 /a 204 /g 40 33 /a 205 /g 42 33 /a 206 /g 44 33 /a 219 /g 46 33 /a 220 /g 48 33 /a 223 /g 50 33 /a 179 /g 52 33 /a 180 /g 28 34 /a 191 /g 30 34 /a 192 /g 32 34 /a 193 /g 34 34 /a 194 /g 36 34 /a 195 /g 38 34 /a 196 /g 40 34 /a 197 /g 42 34 /a 217 /g 44 34 /a 218 /g 46 34 /a 254 /g 48 34 /a 240 /g 50 34 /a 174 /g 52 34 /a 175 /d ""
+	!Bb! /g 1 30 /c 0x0a /a 65 /a 32 /a 66 /a 32 /a 67 /a 32 /a 68 /a 32 /a 69 /a 32 /a 70 /a 32 /a 71 /a 32 /a 72 /a 32 /a 73 /a 32 /a 74 /a 32 /a 75 /a 32 /a 76 /a 32 /a 77 /g 1 31 /a 78 /a 32 /a 79 /a 32 /a 80 /a 32 /a 81 /a 32 /a 82 /a 32 /a 83 /a 32 /a 84 /a 32 /a 85 /a 32 /a 86 /a 32 /a 87 /a 32 /a 88 /a 32 /a 89 /a 32 /a 90 /g 1 32 /a 97 /a 32 /a 98 /a 32 /a 99 /a 32 /a 100 /a 32 /a 101 /a 32 /a 102 /a 32 /a 103 /a 32 /a 104 /a 32 /a 105 /a 32 /a 106 /a 32 /a 107 /a 32 /a 108 /a 32 /a 109 /g 1 33 /a 110 /a 32 /a 111 /a 32 /a 112 /a 32 /a 113 /a 32 /a 114 /a 32 /a 115 /a 32 /a 116 /a 32 /a 117 /a 32 /a 118 /a 32 /a 119 /a 32 /a 120 /a 32 /a 121 /a 32 /a 122 /g 1 34 /a 48 /a 32 /a 49 /a 32 /a 50 /a 32 /a 51 /a 32 /a 52 /a 32 /a 53 /a 32 /a 54 /a 32 /a 55 /a 32 /a 56 /a 32 /a 57 /g 28 30 /a 32 /a 32 /a 33 /a 32 /a 34 /a 32 /a 35 /a 32 /a 36 /a 32 /a 37 /a 32 /a 38 /a 32 /a 39 /a 32 /a 40 /a 32 /a 41 /a 32 /a 42 /a 32 /a 43 /a 32 /a 44 /g 28 31 /a 45 /a 32 /a 46 /a 32 /a 47 /a 32 /a 58 /a 32 /a 59 /a 32 /a 60 /a 32 /a 61 /a 32 /a 62 /a 32 /a 63 /a 32 /a 64 /a 32 /a 91 /a 32 /a 92 /a 32 /a 93 /g 28 32 /a 94 /a 32 /a 96 /a 32 /a 95 /a 32 /a 123 /a 32 /a 124 /a 32 /a 125 /a 32 /a 126 /a 32 /a 176 /a 32 /a 177 /a 32 /a 178 /a 32 /a 185 /a 32 /a 186 /a 32 /a 187 /g 28 33 /a 188 /a 32 /a 200 /a 32 /a 201 /a 32 /a 202 /a 32 /a 203 /a 32 /a 204 /a 32 /a 205 /a 32 /a 206 /a 32 /a 219 /a 32 /a 220 /a 32 /a 223 /a 32 /a 179 /a 32 /a 180 /g 28 34 /a 191 /a 32 /a 192 /a 32 /a 193 /a 32 /a 194 /a 32 /a 195 /a 32 /a 196 /a 32 /a 197 /a 32 /a 217 /a 32 /a 218 /a 32 /a 254 /a 32 /a 240 /a 32 /a 174 /a 32 /a 175z
 	exit /b
 Rem Color List
 	:ColorList
-	!Bb! /g 55 30 /c 0x00 /a 32 /g 57 30 /c 0x10 /a 32 /g 59 30 /c 0x20 /a 32 /g 61 30 /c 0x30 /a 32 /g 63 30 /c 0x40 /a 32 /g 65 30 /c 0x50 /a 32 /g 67 30 /c 0x60 /a 32 /g 69 30 /c 0x70 /a 32 /g 55 31 /c 0x80 /a 32 /g 57 31 /c 0x90 /a 32 /g 59 31 /c 0xa0 /a 32 /g 61 31 /c 0xb0 /a 32 /g 63 31 /c 0xc0 /a 32 /g 65 31 /c 0xd0 /a 32 /g 67 31 /c 0xe0 /a 32 /g 69 31 /c 0xf0 /a 32
-	!Bb! /g 55 33 /c 0x00 /a 32 /g 57 33 /c 0x10 /a 32 /g 59 33 /c 0x20 /a 32 /g 61 33 /c 0x30 /a 32 /g 63 33 /c 0x40 /a 32 /g 65 33 /c 0x50 /a 32 /g 67 33 /c 0x60 /a 32 /g 69 33 /c 0x70 /a 32 /g 55 34 /c 0x80 /a 32 /g 57 34 /c 0x90 /a 32 /g 59 34 /c 0xa0 /a 32 /g 61 34 /c 0xb0 /a 32 /g 63 34 /c 0xc0 /a 32 /g 65 34 /c 0xd0 /a 32 /g 67 34 /c 0xe0 /a 32 /g 69 34 /c 0xf0 /a 32
+	!Bb! /g 55 30 /c 0x00 /a 32 /c 0x00 /a 32 /c 0x10 /a 32 /c 0x00 /a 32 /c 0x20 /a 32 /c 0x00 /a 32 /c 0x30 /a 32 /c 0x00 /a 32 /c 0x40 /a 32 /c 0x00 /a 32 /c 0x50 /a 32 /c 0x00 /a 32 /c 0x60 /a 32 /c 0x00 /a 32 /c 0x70 /a 32 /g 55 31 /c 0x80 /a 32 /c 0x00 /a 32 /c 0x90 /a 32 /c 0x00 /a 32 /c 0xa0 /a 32 /c 0x00 /a 32 /c 0xb0 /a 32 /c 0x00 /a 32 /c 0xc0 /a 32 /c 0x00 /a 32 /c 0xd0 /a 32 /c 0x00 /a 32 /c 0xe0 /a 32 /c 0x00 /a 32 /c 0xf0 /a 32
+	!Bb! /g 55 33 /c 0x00 /a 32 /c 0x00 /a 32 /c 0x10 /a 32 /c 0x00 /a 32 /c 0x20 /a 32 /c 0x00 /a 32 /c 0x30 /a 32 /c 0x00 /a 32 /c 0x40 /a 32 /c 0x00 /a 32 /c 0x50 /a 32 /c 0x00 /a 32 /c 0x60 /a 32 /c 0x00 /a 32 /c 0x70 /a 32 /g 55 34 /c 0x80 /a 32 /c 0x00 /a 32 /c 0x90 /a 32 /c 0x00 /a 32 /c 0xa0 /a 32 /c 0x00 /a 32 /c 0xb0 /a 32 /c 0x00 /a 32 /c 0xc0 /a 32 /c 0x00 /a 32 /c 0xd0 /a 32 /c 0x00 /a 32 /c 0xe0 /a 32 /c 0x00 /a 32 /c 0xf0 /a 32
 	exit /b
 Rem Color Menu
 	:ColorMenu
-	!Bb! /g 54 29 /c 0x!MenuBG!!MenuFG! /a 201 /a 205 /a 205 /a 205 /a 66 /a 71 /a 32 /a 67 /a 111 /a 108 /a 111 /a 117 /a 114 /a 205 /a 205 /a 205 /a 187 /d ""
-	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 30 /a 186 /d "" & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 30 /a 186 /d ""
-	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 31 /a 186 /d "" & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 31 /a 186 /d ""
+	!Bb! /g 54 29 /c 0x!MenuBG!!MenuFG! /a 201 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 187
+	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 30 /a 186 /d & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 30 /a 186
+	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 31 /a 186 /d & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 31 /a 186
 
-	!Bb! /g 54 32 /c 0x!MenuBG!!MenuFG! /a 204 /a 205 /a 205 /a 205 /a 70 /a 71 /a 32 /a 67 /a 111 /a 108 /a 111 /a 117 /a 114 /a 205 /a 205 /a 205 /a 185 /d ""
-	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 33 /a 186 /d "" & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 33 /a 186 /d ""
-	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 34 /a 186 /d "" & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 34 /a 186 /d ""
-	!Bb! /g 54 35 /c 0x!MenuBG!!MenuFG! /a 200 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188 /d "" 
+	!Bb! /g 54 32 /c 0x!MenuBG!!MenuFG! /a 204 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 185
+	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 33 /a 186 & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 33 /a 186
+	!Bb! /c 0x!MenuBG!!MenuFG! /g 54 34 /a 186 & !Bb! /c 0x!MenuBG!!MenuFG! /g 70 34 /a 186
+	!Bb! /g 54 35 /c 0x!MenuBG!!MenuFG! /a 200 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 205 /a 188
+	
+	!Bb! /g 57 29 /c 0x!MenuBG!!MenuFG! /d "Fore-Ground"
+	!Bb! /g 57 32 /c 0x!MenuBG!!MenuFG! /d "Back-Ground"
+	
 	exit /b
 Rem Give Char
-	:GiveChar
+	:Give_Character
 	if not !X! lss 1 (
 		if not !Y! lss 30 (
 			if not !X! gtr 52 (
@@ -634,7 +676,7 @@ Rem Give Char
 		) else (exit /b)
 	) else (exit /b)
 Rem Give Color
-	:GiveColor
+	:Give_Color
 	if not !X! lss 55 (
 		if not !Y! lss 30 (
 			if not !X! gtr 69 (
@@ -652,45 +694,67 @@ Rem Give Color
 		) else (exit /b)
 	) else (exit /b)
 
-Rem On Click
-	:OnClick
-	if not !Y! lss 2 (
-		if not !X! lss 1 (
-			if not !Y! gtr 27 (
-				if not !X! gtr 52 (
-					if "!Current_Tool!"=="2" (
+Rem Paint Brush 1
+	:Paint_Brush_1
+	if "!Current_Brush!"=="1" (
+		if not !Y! lss 2 (
+			if not !X! lss 1 (
+				if not !Y! gtr 27 (
+					if not !X! gtr 52 (
 						start /b !Bb! /g !X! !Y! /c 0x!ColorBG!!ColorFG! /a !MainChar!
-						exit /b
-					)
-				)
-			)
-		)
+						exit /b 1
+					) else (exit /b 0)
+				) else (exit /b 0)
+			) else (exit /b 0)
+		) else (exit /b 0)
 	)
-	
-	if not !Y! lss 3 (
-		if not !X! lss 2 (
-			if not !Y! gtr 26 (
-				if not !X! gtr 51 (
-					if "!Current_Tool!"=="1" (
-						set /a top_left_x=!X!-1
-						set /a top_left_y=!Y!-1
-						set /a top_middle_y=!Y!-1
-						set /a top_right_x=!X!+1
-						set /a top_right_y=!Y!-1
-						set /a middle_left_x=!X!-1
-						set /a middle_right_x=!X!+1
-						set /a bottom_left_x=!X!-1
-						set /a bottom_left_y=!Y!+1
-						set /a bottom_middle_y=!Y!+1
-						set /a bottom_right_x=!X!+1
-						set /a bottom_right_y=!Y!+1
-						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !top_left_x! !top_left_y! /a !MainChar! /g !X! !top_middle_y! /a !MainChar! /g !top_right_x! !top_right_y! /a !MainChar! /g !middle_left_x! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !middle_right_x! !Y! /a !MainChar! /g !bottom_left_x! !bottom_left_y! /a !MainChar! /g !X! !bottom_middle_y! /a !MainChar! /g !bottom_right_x! !bottom_right_y! /a !MainChar!
-						exit /b
-					) else (exit /b)
-				) else (exit /b)
-			) else (exit /b)
-		) else (exit /b)
-	) else (exit /b)
-
-
-	exit /b
+Rem Paint Brush 2
+	:Paint_Brush_2
+	if "!Current_Brush!"=="2" (
+		if not !Y! lss 3 (
+			if not !X! lss 2 (
+				if not !Y! gtr 26 (
+					if not !X! gtr 51 (
+						set /a "Minus_X=!X!-1"
+						set /a "Minus_Y=!Y!-1"
+						set /a "Plus_X=!X!+1"
+						set /a "Plus_Y=!Y!+1"
+						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Plus_X! !Minus_Y! /a !MainChar! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar! /g !Plus_X! !Plus_Y! /a !MainChar!
+						exit /b 1
+					) else (exit /b 0)
+				) else (exit /b 0)
+			) else (exit /b 0)
+		) else (exit /b 0)
+	)
+Rem Paint Brush 3
+	:Paint_Brush_3
+	if "!Current_Brush!"=="3" (
+		if not !Y! lss 2 (
+			if not !X! lss 2 (
+				if not !Y! gtr 27 (
+					if not !X! gtr 51 (
+						set /a "Plus_X=!X!+1"
+						set /a "Minus_X=!X!-1"
+						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar!
+						exit /b 1
+					) else (exit /b 0)
+				) else (exit /b 0)
+			) else (exit /b 0)
+		) else (exit /b 0)
+	)
+Rem Paint Brush 4
+	:Paint_Brush_4
+	if "!Current_Brush!"=="4" (
+		if not !Y! lss 3 (
+			if not !X! lss 1 (
+				if not !Y! gtr 26 (
+					if not !X! gtr 52 (
+						set /a "Plus_Y=!Y!+1"
+						set /a "Minus_Y=!Y!-1"
+						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !X! !Minus_Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
+						exit /b 1
+					) else (exit /b 0)
+				) else (exit /b 0)
+			) else (exit /b 0)
+		) else (exit /b 0)
+	)

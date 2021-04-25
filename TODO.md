@@ -4,4 +4,8 @@
 
 ### Optimization
 
-#### test
+#### Give Char
+
+#### Give Color
+
+#### On Click
