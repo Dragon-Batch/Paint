@@ -5,7 +5,7 @@ Should never be deleted.
 
 "Data\"
 This folder has important temporary files.
-Should never be deleted.
+Should never be deleted while paint is running.
 
 "Library\"
 This folder contains images downloaded from the "Download" button under settings.
