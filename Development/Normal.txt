@@ -21,7 +21,7 @@
 ║                                                    ║╚═══════════════╝
 ║                                                    ║╔═════Tools═════╗
 ║                                                    ║║Eraser Tool---X║
-║                                                    ║║Color Tool----X║
+║                                                    ║║Eye Droper----X║
 ║                                                    ║║Copy Tool-----X║
 ║                                                    ║║Text Tool-----X║
 ║                                                    ║║Line Tool-----X║

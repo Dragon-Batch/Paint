@@ -108,7 +108,7 @@ Rem Tool Menu
 
 	!Bb! /g 60 21 /c 0x!MenuBG!!MenuFG! /d "Tools"
 	!Bb! /g 55 22 /c 0x!MenuBG!!MenuFG! /d "Eraser Tool---"
-	!Bb! /g 55 23 /c 0x!MenuBG!!MenuFG! /d "Color Tool----"
+	!Bb! /g 55 23 /c 0x!MenuBG!!MenuFG! /d "Eye Droper----"
 	!Bb! /g 55 24 /c 0x!MenuBG!!MenuFG! /d "Copy Tool-----"
 	!Bb! /g 55 25 /c 0x!MenuBG!!MenuFG! /d "Text Tool-----"
 	!Bb! /g 55 26 /c 0x!MenuBG!!MenuFG! /d "Line Tool-----"
