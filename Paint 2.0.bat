@@ -16,7 +16,7 @@ set "Fn=Core\Fn.dll"
 set "Chars.if=Core\Chars.if"
 set "ColorsFG.if=Core\ColorsFG.if"
 set "ColorsBG.if=Core\ColorsBG.if"
-set "Current_Brush=2"
+set "Current_Brush=1"
 set "MenuBG=0"
 set "MenuFG=a"
 set "ColorFG=8"
@@ -37,7 +37,6 @@ call :Tool_Menu
 		set "X=%%b"
 		set "Y=%%a"
 
-
 		Rem Fun code below :)
 		Rem set /a "Current_Brush=(%random%%%4)+1"
 		Rem set /a "MainChar=(%random%%%255)+1"
@@ -45,7 +44,7 @@ call :Tool_Menu
 		Rem set /a "ColorBG=(%random%%%9)+1"
 
 		call :Paint_Brush_!Current_Brush!
-		if not "!errorlevel!"=="1" (
+		if "!errorlevel!"=="0" (
 			call :Give_Character
 			call :Drop_Down_Functions
 			call :Give_Color
@@ -108,7 +107,7 @@ Rem Tool Menu
 
 	!Bb! /g 60 21 /c 0x!MenuBG!!MenuFG! /d "Tools"
 	!Bb! /g 55 22 /c 0x!MenuBG!!MenuFG! /d "Eraser Tool---"
-	!Bb! /g 55 23 /c 0x!MenuBG!!MenuFG! /d "Eye Droper----"
+	!Bb! /g 55 23 /c 0x!MenuBG!!MenuFG! /d "Color Tool----"
 	!Bb! /g 55 24 /c 0x!MenuBG!!MenuFG! /d "Copy Tool-----"
 	!Bb! /g 55 25 /c 0x!MenuBG!!MenuFG! /d "Text Tool-----"
 	!Bb! /g 55 26 /c 0x!MenuBG!!MenuFG! /d "Line Tool-----"
@@ -728,7 +727,7 @@ Rem Give Color
 
 Rem Paint Brush 1 (Normal Brush)
 	:Paint_Brush_1
-	if "!Current_Brush!"=="1" (
+		Rem main normal 1x1 brush
 		if not !X! lss 1 (
 			if not !Y! lss 2 (
 				if not !X! gtr 52 (
@@ -739,131 +738,126 @@ Rem Paint Brush 1 (Normal Brush)
 				) else (exit /b 0)
 			) else (exit /b 0)
 		) else (exit /b 0)
-	) else (exit /b 0)
 Rem Paint Brush 2 (3x3 Brush)
 	:Paint_Brush_2
-	if "!Current_Brush!"=="2" (
-		Rem center
-		if not !X! lss 2 (
-			if not !Y! lss 3 (
-				if not !X! gtr 51 (
-					if not !Y! gtr 26 (
-						set /a "Minus_X=!X!-1"
-						set /a "Minus_Y=!Y!-1"
-						set /a "Plus_X=!X!+1"
-						set /a "Plus_Y=!Y!+1"
-						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Plus_X! !Minus_Y! /a !MainChar! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar! /g !Plus_X! !Plus_Y! /a !MainChar!
-						exit /b 1
-					)
-				)
-			)
-		)
-		Rem right side
-		if "!X!"=="52" (
-			if not !Y! gtr 26 (
-				if not !Y! lss 3 (
-					set /a "Minus_Y=!Y!-1"
-					set /a "Plus_Y=!Y!+1"
+	Rem main 3x3 brush
+	if not !X! lss 2 (
+		if not !Y! lss 3 (
+			if not !X! gtr 51 (
+				if not !Y! gtr 26 (
 					set /a "Minus_X=!X!-1"
-					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
-					exit /b 1
-				)
-			)
-		)
-		Rem left side
-		if "!X!"=="1" (
-			if not !Y! gtr 26 (
-				if not !Y! lss 3 (
 					set /a "Minus_Y=!Y!-1"
-					set /a "Plus_Y=!Y!+1"
 					set /a "Plus_X=!X!+1"
-					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Plus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
-					exit /b 1
-				)
-			)
-		)
-		Rem bottom side
-		if "!Y!"=="27" (
-			if not !X! gtr 51 (
-				if not !X! lss 2 (
-					set /a "Minus_Y=!Y!-1"
-					set /a "Minus_X=!X!-1"
-					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /a !MainChar! /a !MainChar! /g !Minus_X! !Minus_Y! /a !MainChar! /a !MainChar! /a !MainChar!
-					exit /b 1
-				)
-			)
-		)
-		Rem top side
-		if "!Y!"=="2" (
-			if not !X! gtr 51 (
-				if not !X! lss 2 (
 					set /a "Plus_Y=!Y!+1"
-					set /a "Minus_X=!X!-1"
-					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /a !MainChar! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /a !MainChar! /a !MainChar!
+					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Plus_X! !Minus_Y! /a !MainChar! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar! /g !Plus_X! !Plus_Y! /a !MainChar!
 					exit /b 1
 				)
 			)
 		)
-		Rem top left corner
-		if "!X!"=="1" (
-			if "!Y!"=="2" (
-				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 1 2 /a !MainChar! /a !MainChar! /g 1 3 /a !MainChar! /a !MainChar!
+	)
+	Rem right side
+	if "!X!"=="52" (
+		if not !Y! gtr 26 (
+			if not !Y! lss 3 (
+				set /a "Minus_Y=!Y!-1"
+				set /a "Plus_Y=!Y!+1"
+				set /a "Minus_X=!X!-1"
+				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
 				exit /b 1
 			)
 		)
-		rem bottom left corner
-		if "!X!"=="1" (
-			if "!Y!"=="27" (
-				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 1 27 /a !MainChar! /a !MainChar! /g 1 26 /a !MainChar! /a !MainChar!
+	)
+	Rem left side
+	if "!X!"=="1" (
+		if not !Y! gtr 26 (
+			if not !Y! lss 3 (
+				set /a "Minus_Y=!Y!-1"
+				set /a "Plus_Y=!Y!+1"
+				set /a "Plus_X=!X!+1"
+				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Plus_X! !Minus_Y! /a !MainChar! /g !X! !Minus_Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Plus_Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
 				exit /b 1
 			)
 		)
-		Rem bottom right corner
-		if "!X!"=="52" (
-			if "!Y!"=="27" (
-				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 51 27 /a !MainChar! /a !MainChar! /g 51 26 /a !MainChar! /a !MainChar!
+	)
+	Rem bottom side
+	if "!Y!"=="27" (
+		if not !X! gtr 51 (
+			if not !X! lss 2 (
+				set /a "Minus_Y=!Y!-1"
+				set /a "Minus_X=!X!-1"
+				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /a !MainChar! /a !MainChar! /g !Minus_X! !Minus_Y! /a !MainChar! /a !MainChar! /a !MainChar!
 				exit /b 1
 			)
 		)
-		Rem top right corner
-		if "!X!"=="52" (
-			if "!Y!"=="2" (
-				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 51 2 /a !MainChar! /a !MainChar! /g 51 3 /a !MainChar! /a !MainChar!
+	)
+	Rem top side
+	if "!Y!"=="2" (
+		if not !X! gtr 51 (
+			if not !X! lss 2 (
+				set /a "Plus_Y=!Y!+1"
+				set /a "Minus_X=!X!-1"
+				start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /a !MainChar! /a !MainChar! /g !Minus_X! !Plus_Y! /a !MainChar! /a !MainChar! /a !MainChar!
 				exit /b 1
 			)
 		)
-
-		exit /b 0
-	) else (exit /b 0)
+	)
+	Rem top left
+	if "!X!"=="1" (
+		if "!Y!"=="2" (
+			start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 1 2 /a !MainChar! /a !MainChar! /g 1 3 /a !MainChar! /a !MainChar!
+			exit /b 1
+		)
+	)
+	Rem bottom left
+	if "!X!"=="1" (
+		if "!Y!"=="27" (
+			start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 1 27 /a !MainChar! /a !MainChar! /g 1 26 /a !MainChar! /a !MainChar!
+			exit /b 1
+		)
+	)
+	Rem bottom right
+	if "!X!"=="52" (
+		if "!Y!"=="27" (
+			start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 51 27 /a !MainChar! /a !MainChar! /g 51 26 /a !MainChar! /a !MainChar!
+			exit /b 1
+		)
+	)
+	Rem top right
+	if "!X!"=="52" (
+		if "!Y!"=="2" (
+			start /b !Bb! /c 0x!ColorBG!!ColorFG! /g 51 2 /a !MainChar! /a !MainChar! /g 51 3 /a !MainChar! /a !MainChar!
+			exit /b 1
+		)
+	)
+	exit /b 0
 Rem Paint Brush 3 (wide Brush)
 	:Paint_Brush_3
-	if "!Current_Brush!"=="3" (
-		if not !X! lss 2 (
-			if not !Y! lss 2 (
-				if not !X! gtr 51 (
-					if not !Y! gtr 27 (
-						set /a "Plus_X=!X!+1"
-						set /a "Minus_X=!X!-1"
-						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar!
-						exit /b 1
-					) else (exit /b 0)
-				) else (exit /b 0)
-			) else (exit /b 0)
-		) else (exit /b 0)
-	)
-Rem Paint Brush 4 (Tall Brush)
-	:Paint_Brush_4
-	if "!Current_Brush!"=="4" (
-		if not !X! lss 1 (
-			if not !Y! lss 3 (
-				if not !X! gtr 52 (
-					if not !Y! gtr 26 (
-						set /a "Plus_Y=!Y!+1"
-						set /a "Minus_Y=!Y!-1"
-						start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !X! !Minus_Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
-						exit /b 1
-					) else (exit /b 0)
+	Rem main wide brush
+	if not !X! lss 2 (
+		if not !Y! lss 2 (
+			if not !X! gtr 51 (
+				if not !Y! gtr 27 (
+					set /a "Plus_X=!X!+1"
+					set /a "Minus_X=!X!-1"
+					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !Minus_X! !Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !Plus_X! !Y! /a !MainChar!
+					exit /b 1
 				) else (exit /b 0)
 			) else (exit /b 0)
 		) else (exit /b 0)
 	) else (exit /b 0)
+Rem Paint Brush 4 (Tall Brush)
+	:Paint_Brush_4
+	Rem main tall brush
+	if not !X! lss 1 (
+		if not !Y! lss 3 (
+			if not !X! gtr 52 (
+				if not !Y! gtr 26 (
+					set /a "Plus_Y=!Y!+1"
+					set /a "Minus_Y=!Y!-1"
+					start /b !Bb! /c 0x!ColorBG!!ColorFG! /g !X! !Minus_Y! /a !MainChar! /g !X! !Y! /a !MainChar! /g !X! !Plus_Y! /a !MainChar!
+					exit /b 1
+				) else (exit /b 0)
+			) else (exit /b 0)
+		) else (exit /b 0)
+	) else (exit /b 0)
+	exit /b 0

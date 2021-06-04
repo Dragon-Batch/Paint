@@ -4,8 +4,4 @@
 
 ### Optimization
 
-#### Give Char
-
-#### Give Color
-
-#### On Click
+#### acualy work on this instead of making usless shit with python
